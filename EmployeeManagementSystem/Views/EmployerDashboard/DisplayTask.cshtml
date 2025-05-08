@@ -1,0 +1,101 @@
+﻿@model IEnumerable<EmployeeManagementSystem.Models.AddTask>
+
+@{
+    ViewData["Title"] = "DisplayTask";
+    Layout = "~/Views/Shared/_EmployerLayout.cshtml";
+}
+
+<h1>DisplayTask</h1>
+
+<p>
+    <a asp-action="CreateTask" asp-controller="EmployerDashboard">Create New</a>
+</p>
+
+@if (TempData["Created"] != null)
+{
+        <p style="color:green;">@TempData["Created"]</p>
+} 
+@if (TempData["Error"] != null)
+{
+        <p style="color:red;">@TempData["Error"]</p>
+}
+
+@if(TempData["deleted"] != null)
+{
+    <p style="color:red;">@TempData["deleted"]</p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+               Image
+            </th>
+            <th>
+                 @Html.DisplayNameFor(model => model.AssigneeId) 
+            </th>
+            @* <th>
+                Assignee
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RewardPrice)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                    <img src="~/task-images/@Html.DisplayFor(modelItem => item.PicturePath)" style="width:100px;height:100px"/>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssigneeId)
+            </td>
+               @*  <td>
+                    @(item.Assignee?.Name ?? "N/A")
+                </td> *@
+
+                <td>
+                    @item.Status.ToString()
+                </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.RewardPrice)
+            </td>
+
+            <td>
+    @if (item.AssigneeId == null || item.AssigneeId == 0)
+    {
+        <a asp-action="EditTask" asp-route-id="@item.Id">Edit</a> 
+        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+    }
+    else
+    {
+        <span style="color:gray;">Already Assigned</span>
+    }
+</td>
+
+           
+
+        </tr>
+}
+    </tbody>
+</table>

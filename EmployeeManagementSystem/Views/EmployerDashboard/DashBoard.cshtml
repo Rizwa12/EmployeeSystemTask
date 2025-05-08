@@ -1,0 +1,9 @@
+﻿
+@{
+    ViewData["Title"] = "DashBoard";
+    Layout = "~/Views/Shared/_EmployerLayout.cshtml";
+}
+
+<h1>DashBoard</h1>
+<h2>@ViewBag.MySession</h2>
+<a asp-controller="EmployerDashboard" asp-action="Logout">Logout</a>
